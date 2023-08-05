@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Watch</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #watch {
+            width: 200px;
+            height: 200px;
+            border: 10px solid #333;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #hour, #minute, #second {
+            width: 2px;
+            height: 50px;
+            background-color: #333;
+            position: absolute;
+            transform-origin: center bottom;
+            transition: transform 0.5s cubic-bezier(0.4, 2.2, 0.5, 1);
+        }
+
+        #minute {
+            height: 70px;
+            background-color: #555;
+        }
+
+        #second {
+            height: 80px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="watch">
+        <div id="hour"></div>
+        <div id="minute"></div>
+        <div id="second"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+
+            const hour = document.getElementById('hour');
+            const minute = document.getElementById('minute');
+            const second = document.getElementById('second');
+
+            const hourRotation = (now.getHours() % 12 + now.getMinutes() / 60) * 360 / 12;
+            const minuteRotation = (now.getMinutes() + now.getSeconds() / 60) * 360 / 60;
+            const secondRotation = now.getSeconds() * 360 / 60;
+
+            hour.style.transform = `rotate(${hourRotation}deg)`;
+            minute.style.transform = `rotate(${minuteRotation}deg)`;
+            second.style.transform = `rotate(${secondRotation}deg)`;
+
+            setTimeout(updateClock, 1000); // Update every 1 second
+        }
+
+        updateClock(); // Initial update
+    </script>
+</body>
+</html>
